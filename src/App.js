@@ -1,15 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// components
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+
+//user components
+import RoutesWithUserChatComponent from "./components/user/RoutesWithUserChatComponent";
+
+// Publicly available pages
 import CartPage from "./pages/CartPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ProductListPage from "./pages/ProductListPage";
 import RegisterPage from "./pages/RegisterPage";
+
+// Protected user pages
 import ProtectedRoutesComponent from "./components/ProtectedRoutesComponent";
 import UserCartDetailsPage from "./pages/User/UserCartDetailsPage";
 import UserOrderDetailsPage from "./pages/User/UserOrderDetailsPage";
 import USerOrdersPage from "./pages/User/USerOrdersPage";
 import USerProfilePage from "./pages/User/USerProfilePage";
+
+// protected admin pages
 import AdminUsersPage from "./pages/Admin/AdminUsersPage";
 import AdminEditUserPage from "./pages/Admin/AdminEditUserPage";
 import AdminProductsPage from "./pages/Admin/AdminProductsPage";
@@ -23,13 +36,19 @@ import AdminAnalyticsPage from "./pages/Admin/AdminAnalyticsPage";
 function App() {
   return (
     <BrowserRouter>
+      <HeaderComponent />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/product-list" element={<ProductListPage />}></Route>
-        <Route path="/product-details" element={<ProductDetailsPage />}></Route>
-        <Route path="/cart" element={<CartPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
+        <Route element={<RoutesWithUserChatComponent />}>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/product-list" element={<ProductListPage />}></Route>
+          <Route
+            path="/product-details"
+            element={<ProductDetailsPage />}
+          ></Route>
+          <Route path="/cart" element={<CartPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+        </Route>
 
         {/* user protected routes */}
 
@@ -47,6 +66,7 @@ function App() {
         </Route>
 
         {/* admin protected routes */}
+
         <Route element={<ProtectedRoutesComponent admin={true} />}>
           <Route path="/admin/users" element={<AdminUsersPage />}></Route>
           <Route
@@ -74,6 +94,7 @@ function App() {
           ></Route>
         </Route>
       </Routes>
+      <FooterComponent />
     </BrowserRouter>
   );
 }
