@@ -2,14 +2,14 @@ import { Button, Card } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 const CategoryCardComponent = ({ category, idx }) => {
   const images = [
-    "/images/carousel/tablets-category.png",
-    "/images/carousel/monitors-category.png",
-    "/images/carousel/games-category.png",
-    "/images/carousel/tablets-category.png",
-    "/images/carousel/monitors-category.png",
-    "/images/carousel/tablets-category.png",
-    "/images/carousel/monitors-category.png",
-    "/images/carousel/games-category.png",
+    "/images/tablets-category.png",
+    "/images/monitors-category.png",
+    "/images/games-category.png",
+    "/images/tablets-category.png",
+    "/images/monitors-category.png",
+    "/images/tablets-category.png",
+    "/images/monitors-category.png",
+    "/images/games-category.png",
   ];
   return (
     <Card>
