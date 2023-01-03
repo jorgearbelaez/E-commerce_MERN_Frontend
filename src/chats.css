@@ -70,6 +70,6 @@
     box-shadow: none;
   }
   .cht-msg {
-    max-height: 300px;
+    max-height: 299px;
     overflow: auto;
   }
