@@ -6,17 +6,17 @@ import PriceFilterComponent from "../components/filterQueryResultOptions/PriceFi
 import RatingFilterComponent from "../components/filterQueryResultOptions/RatingFilterComponent";
 import CategoryFilterComponent from "../components/filterQueryResultOptions/CategoryFilterComponent";
 import AttributesFilterComponent from "../components/filterQueryResultOptions/AttributesFilterComponent";
-
 const ProductListPage = () => {
   return (
     <Container fluid>
       <Row>
         <Col md={3}>
           <ListGroup variant="flush">
-            <ListGroup.Item>
+            <ListGroup.Item className="mb-3 mt-3">
               <SortOptionsComponent />
             </ListGroup.Item>
             <ListGroup.Item>
+              FILTER: <br />
               <PriceFilterComponent />
             </ListGroup.Item>
             <ListGroup.Item>
