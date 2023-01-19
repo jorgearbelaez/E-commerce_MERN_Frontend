@@ -35,7 +35,7 @@ const ProductListPage = () => {
           </ListGroup>
         </Col>
         <Col md={9}>
-          {Array.from({ length: 2 }).map((_, idx) => (
+          {Array.from({ length: 3 }).map((_, idx) => (
             <ProductForListComponent
               key={idx}
               images={["games", "monitors", "tablets", "games", "monitors"]}
