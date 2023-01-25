@@ -19,7 +19,7 @@ const AdminOrderDetailsPage = () => {
           <Row>
             <Col md={6}>
               <h2>Shipping</h2>
-              <b>Name</b>: John Doe <br />
+              <b>Name</b>: Jorge arbelaez <br />
               <b>Address</b>: 8739 Mayflower St. Los Angeles, CA 90063 <br />
               <b>Phone</b>: 888 777 666
             </Col>
@@ -40,7 +40,7 @@ const AdminOrderDetailsPage = () => {
               </Col>
               <Col>
                 <Alert className="mt-3" variant="success">
-                  Paid on 2022-10-02
+                  Paid on 2023-01-24
                 </Alert>
               </Col>
             </Row>
