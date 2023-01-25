@@ -10,7 +10,7 @@ const AdminChatRoomComponent = () => {
     <>
       <Toast show={toast1} onClose={close1} className="ms-4 mb-5">
         <Toast.Header>
-          <strong className="me-auto">Chat with John Doe</strong>
+          <strong className="me-auto">Chat with Jorge Arbelaez</strong>
         </Toast.Header>
         <Toast.Body>
           <div style={{ maxHeight: "500px", overflow: "auto" }}>
@@ -42,7 +42,7 @@ const AdminChatRoomComponent = () => {
       </Toast>
       <Toast show={toast2} onClose={close2} className="ms-4 mb-5">
         <Toast.Header>
-          <strong className="me-auto">Chat with John Doe2</strong>
+          <strong className="me-auto">Chat with dylan arbelaez</strong>
         </Toast.Header>
         <Toast.Body>
           <div style={{ maxHeight: "500px", overflow: "auto" }}>
