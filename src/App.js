@@ -86,7 +86,7 @@ function App() {
           ></Route>
           <Route path="/admin/orders" element={<AdminOrdersPage />}></Route>
           <Route
-            path="/admin/order-details"
+            path="/admin/order-details/:id"
             element={<AdminOrderDetailsPage />}
           ></Route>
           <Route path="/admin/chats" element={<AdminChatsPage />}></Route>
