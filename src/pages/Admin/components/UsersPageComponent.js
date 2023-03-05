@@ -2,11 +2,23 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import AdminLinksComponent from "../../../components/admin/AdminLinksComponent";
 
-const deleteHandler = () => {
-  if (window.confirm("Are you sure?")) alert("User deleted!");
-};
+import { useState, useEffect } from "react";
 
-const UsersPageComponent = () => {
+const UsersPageComponent = ({ fetchUsers }) => {
+  const [users, setUsers] = useState([]);
+
+  const deleteHandler = () => {
+    if (window.confirm("Are you sure?")) alert("User deleted!");
+  };
+
+  useEffect(() => {
+    // abort controller(javascript object to abort one or more web request)
+    const abctrl = new AbortController();
+    fetchUsers(abctrl).then((res) => setUsers(res));
+    return () => abctrl.abort();
+    // if the user changes his mind or the request is lasting too long and th user decide to leave the page.
+  }, []);
+
   return (
     <Row className="m-5">
       <Col md={2}>
@@ -14,6 +26,7 @@ const UsersPageComponent = () => {
       </Col>
       <Col md={10}>
         <h1>User List</h1>
+        {console.log(users)}
         <Table striped bordered hover responsive>
           <thead>
             <tr>
@@ -30,8 +43,8 @@ const UsersPageComponent = () => {
               (item, idx) => (
                 <tr key={idx}>
                   <td>{idx + 1}</td>
-                  <td>Jorge</td>
-                  <td>Arbelaez</td>
+                  <td>Mark</td>
+                  <td>Twain</td>
                   <td>email@email.com</td>
                   <td>
                     <i className={item}></i>
