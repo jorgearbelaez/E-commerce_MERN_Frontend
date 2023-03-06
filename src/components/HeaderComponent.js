@@ -1,7 +1,7 @@
 import {
-  Container,
-  Nav,
   Navbar,
+  Nav,
+  Container,
   NavDropdown,
   Badge,
   Form,
@@ -10,10 +10,14 @@ import {
   Button,
   InputGroup,
 } from "react-bootstrap";
+
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
+import { logout } from "../redux/actions/userActions";
+import { useDispatch } from "react-redux";
 
 const HeaderComponent = () => {
+  const dispatch = useDispatch();
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -26,10 +30,10 @@ const HeaderComponent = () => {
             <InputGroup>
               <DropdownButton id="dropdown-basic-button" title="All">
                 <Dropdown.Item>Electronics</Dropdown.Item>
-                <Dropdown.Item>Books</Dropdown.Item>
                 <Dropdown.Item>Cars</Dropdown.Item>
+                <Dropdown.Item>Books</Dropdown.Item>
               </DropdownButton>
-              <Form.Control type="text" placeholder="Search in shop" />
+              <Form.Control type="text" placeholder="Search in shop ..." />
               <Button variant="warning">
                 <i className="bi bi-search text-dark"></i>
               </Button>
@@ -43,7 +47,7 @@ const HeaderComponent = () => {
               </Nav.Link>
             </LinkContainer>
 
-            <NavDropdown title="Jorge Arbelaez" id="collasible-nav-dropdown">
+            <NavDropdown title="John Doe" id="collasible-nav-dropdown">
               <NavDropdown.Item
                 eventKey="/user/my-orders"
                 as={Link}
@@ -54,7 +58,9 @@ const HeaderComponent = () => {
               <NavDropdown.Item eventKey="/user" as={Link} to="/user">
                 My profile
               </NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => dispatch(logout())}>
+                Logout
+              </NavDropdown.Item>
             </NavDropdown>
             <LinkContainer to="/login">
               <Nav.Link>Login</Nav.Link>
@@ -67,7 +73,7 @@ const HeaderComponent = () => {
                 <Badge pill bg="danger">
                   2
                 </Badge>
-                <i className="bi bi-cart4"></i>
+                <i className="bi bi-cart-dash"></i>
                 <span className="ms-1">CART</span>
               </Nav.Link>
             </LinkContainer>

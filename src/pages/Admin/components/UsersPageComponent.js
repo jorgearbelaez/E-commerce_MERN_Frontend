@@ -4,9 +4,13 @@ import AdminLinksComponent from "../../../components/admin/AdminLinksComponent";
 
 import { useState, useEffect } from "react";
 
+import { logout } from "../../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+
 const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
   const [users, setUsers] = useState([]);
   const [userDeleted, setUserDeleted] = useState(false);
+  const dispatch = useDispatch();
 
   const deleteHandler = async (userId) => {
     if (window.confirm("Are you sure?")) {
@@ -22,11 +26,13 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
     const abctrl = new AbortController();
     fetchUsers(abctrl)
       .then((res) => setUsers(res))
-      .catch((er) =>
-        console.log(
-          er.response.data.message ? er.response.data.message : er.response.data
-        )
+      .catch(
+        (er) => dispatch(logout())
+        // console.log(
+        //   er.response.data.message ? er.response.data.message : er.response.data
+        // )
       );
+
     return () => abctrl.abort();
     // if the user changes his mind or the request is lasting too long and the user decide to leave the page.
 
