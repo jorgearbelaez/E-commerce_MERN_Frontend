@@ -13,14 +13,17 @@ const RegisterPageComponent = ({
     error: "",
     loading: false,
   });
+  const [passwordsMatchState, setPasswordsMatchState] = useState(true);
 
   const onChange = () => {
     const password = document.querySelector("input[name=password]");
-    const confirm = document.querySelector("input[name=confirmPassword]");
-    if (confirm.value === password.value) {
-      confirm.setCustomValidity("");
+    const confirmPassword = document.querySelector(
+      "input[name=confirmPassword]"
+    );
+    if (confirmPassword.value === password.value) {
+      setPasswordsMatchState(true);
     } else {
-      confirm.setCustomValidity("Passwords do not match");
+      setPasswordsMatchState(false);
     }
   };
 
@@ -48,8 +51,6 @@ const RegisterPageComponent = ({
             loading: false,
           });
           reduxDispatch(setReduxUserState(data.userCreated));
-          sessionStorage.setItem("userInfo", JSON.stringify(data.userCreated));
-          if (data.success === "User created") window.location.href = "/user";
         })
         .catch((er) =>
           setRegisterUserResponseState({
@@ -113,6 +114,7 @@ const RegisterPageComponent = ({
                 placeholder="Password"
                 minLength={6}
                 onChange={onChange}
+                isInvalid={!passwordsMatchState}
               />
               <Form.Control.Feedback type="invalid">
                 Please anter a valid password
@@ -130,6 +132,7 @@ const RegisterPageComponent = ({
                 placeholder="Repeat Password"
                 minLength={6}
                 onChange={onChange}
+                isInvalid={!passwordsMatchState}
               />
               <Form.Control.Feedback type="invalid">
                 Both passwords should match
