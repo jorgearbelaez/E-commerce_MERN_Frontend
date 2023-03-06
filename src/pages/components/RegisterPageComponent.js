@@ -2,6 +2,7 @@ import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+
 const RegisterPageComponent = ({
   registerUserApiRequest,
   reduxDispatch,
@@ -51,11 +52,12 @@ const RegisterPageComponent = ({
             loading: false,
           });
           reduxDispatch(setReduxUserState(data.userCreated));
+          console.log(data);
         })
         .catch((er) =>
           setRegisterUserResponseState({
-            error: er.response.data.message
-              ? er.response.data.message
+            error: er.response.data.error
+              ? er.response.data.error
               : er.response.data,
           })
         );
@@ -164,7 +166,7 @@ const RegisterPageComponent = ({
             <Alert
               show={
                 registerUserResponseState &&
-                registerUserResponseState.error === "user exists"
+                registerUserResponseState.error === "User exists"
               }
               variant="danger"
             >
