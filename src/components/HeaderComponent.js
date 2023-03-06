@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
+  // select info from global state
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
