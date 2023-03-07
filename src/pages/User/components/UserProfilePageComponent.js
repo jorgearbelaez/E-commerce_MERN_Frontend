@@ -23,6 +23,7 @@ const UserProfilePageComponent = ({
     fetchUser(userInfo._id)
       .then((data) => setUser(data))
       .catch((er) => console.log(er));
+    // eslint-disable-next-line
   }, [userInfo._id]);
 
   const onChange = () => {
@@ -30,6 +31,7 @@ const UserProfilePageComponent = ({
     const confirmPassword = document.querySelector(
       "input[name=confirmPassword]"
     );
+    // alert on both password should match
     if (confirmPassword.value === password.value) {
       setPasswordsMatchState(true);
     } else {
@@ -69,12 +71,14 @@ const UserProfilePageComponent = ({
       )
         .then((data) => {
           setUpdateUserResponseState({ success: data.success, error: "" });
+          // update global state
           reduxDispatch(
             setReduxUserState({
               doNotLogout: userInfo.doNotLogout,
               ...data.userUpdated,
             })
           );
+          // update local or session storage
           if (userInfo.doNotLogout)
             localStorage.setItem(
               "userInfo",
