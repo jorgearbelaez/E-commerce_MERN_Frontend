@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 const UserProfilePageComponent = ({
   updateUserApiRequest,
   fetchUser,
-  userInfo,
+  userInfoFromRedux,
+  setReduxUserState,
+  reduxDispatch,
+  localStorage,
+  sessionStorage,
 }) => {
   const [validated, setValidated] = useState(false);
   const [updateUserResponseState, setUpdateUserResponseState] = useState({
@@ -13,12 +17,12 @@ const UserProfilePageComponent = ({
   });
   const [passwordsMatchState, setPasswordsMatchState] = useState(true);
   const [user, setUser] = useState({});
-  // fetch tu user data for filling inputs in profile user
+  const userInfo = userInfoFromRedux;
+
   useEffect(() => {
     fetchUser(userInfo._id)
       .then((data) => setUser(data))
       .catch((er) => console.log(er));
-    // eslint-disable-next-line
   }, [userInfo._id]);
 
   const onChange = () => {
@@ -65,6 +69,22 @@ const UserProfilePageComponent = ({
       )
         .then((data) => {
           setUpdateUserResponseState({ success: data.success, error: "" });
+          reduxDispatch(
+            setReduxUserState({
+              doNotLogout: userInfo.doNotLogout,
+              ...data.userUpdated,
+            })
+          );
+          if (userInfo.doNotLogout)
+            localStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: true, ...data.userUpdated })
+            );
+          else
+            sessionStorage.setItem(
+              "userInfo",
+              JSON.stringify({ doNotLogout: false, ...data.userUpdated })
+            );
         })
         .catch((er) =>
           setUpdateUserResponseState({
