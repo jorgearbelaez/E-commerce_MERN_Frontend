@@ -4,12 +4,19 @@ import CartItemComponent from "../../components/CartItemComponent";
 
 const CartPageComponent = ({
   addToCart,
+  removeFromCart,
   cartItems,
   cartSubtotal,
   reduxDispatch,
 }) => {
   const changeCount = (productID, count) => {
     reduxDispatch(addToCart(productID, count));
+  };
+
+  const removeFromCartHandler = (productID, quantity, price) => {
+    if (window.confirm("Are you sure?")) {
+      reduxDispatch(removeFromCart(productID, quantity, price));
+    }
   };
 
   return (
@@ -26,6 +33,7 @@ const CartPageComponent = ({
                   item={item}
                   key={idx}
                   changeCount={changeCount}
+                  removeFromCartHandler={removeFromCartHandler}
                 />
               ))}
             </ListGroup>

@@ -21,7 +21,6 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
         currentState.itemsCount = 0;
         currentState.cartSubtotal = 0;
         currentState.cartItems = state.cartItems.map((x) => {
-          // add product and sum quantity and price
           if (x.productID === productAlreadyExistsInState.productID) {
             currentState.itemsCount += Number(productBeingAddedToCart.quantity);
             const sum =
@@ -29,7 +28,6 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
               Number(productBeingAddedToCart.price);
             currentState.cartSubtotal += sum;
           } else {
-            //if product doesn`t exists just upadte quantity and sum
             currentState.itemsCount += Number(x.quantity);
             const sum = Number(x.quantity) * Number(x.price);
             currentState.cartSubtotal += sum;
@@ -48,6 +46,16 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
       }
 
       return currentState;
+    case actionTypes.REMOVE_FROM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (x) => x.productID !== action.payload.productID
+        ),
+        itemsCount: state.itemsCount - action.payload.quantity,
+        cartSubtotal:
+          state.cartSubtotal - action.payload.price * action.payload.quantity,
+      };
     default:
       return state;
   }
