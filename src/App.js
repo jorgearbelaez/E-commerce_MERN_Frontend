@@ -62,7 +62,7 @@ function App() {
             element={<UserCartDetailsPage />}
           ></Route>
           <Route
-            path="/user/order-details"
+            path="/user/order-details/:id"
             element={<UserOrderDetailsPage />}
           ></Route>
         </Route>
