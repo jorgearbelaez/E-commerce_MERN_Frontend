@@ -15,7 +15,7 @@ const UserOrderDetailsPageComponent = ({
   userInfo,
   getUser,
   getOrder,
-  loadPaypalScript,
+  loadPayPalScript,
 }) => {
   const [userAddress, setUserAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -77,7 +77,7 @@ const UserOrderDetailsPageComponent = ({
         "To pay for your order click one of the buttons below"
       );
       if (!isPaid) {
-        loadPaypalScript();
+        loadPayPalScript(cartSubtotal, cartItems);
       }
     } else {
       setOrderButtonMessage("Your order was placed. Thank you");

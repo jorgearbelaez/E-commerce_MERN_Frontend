@@ -8,27 +8,55 @@ const getOrder = async (orderId) => {
   return data;
 };
 
-const loadPaypalScript = () => {
+const loadPayPalScript = (cartSubtotal, cartItems) => {
   loadScript({
     "client-id":
       "AaL_xj8QVq2vA6CfmYAEk51QHPZld1Re_KcF-pNuFVMOSAMdTIl_caVjlRtMVUTTwwS2q8-jobdlU0AM",
   })
     .then((paypal) => {
       paypal
-        .Buttons({
-          createOrder: createPayPalOrderHandler,
-          onCancel: onCancelHandler,
-          onApprove: onApproveHandler,
-          onError: onErrorHandler,
-        })
+        .Buttons(buttons(cartSubtotal, cartItems))
         .render("#paypal-container-element");
     })
     .catch((err) => {
       console.error("failed to load the PayPal JS SDK script", err);
     });
 };
-const createPayPalOrderHandler = function () {
-  console.log("createPayPalOrderHandler");
+
+const buttons = (cartSubtotal, cartItems) => {
+  return {
+    // using paypal documentation
+    createOrder: function (data, actions) {
+      return actions.order.create({
+        purchase_units: [
+          {
+            amount: {
+              value: cartSubtotal,
+              breakdown: {
+                item_total: {
+                  currency_code: "USD",
+                  value: cartSubtotal,
+                },
+              },
+            },
+            items: cartItems.map((product) => {
+              return {
+                name: product.name,
+                unit_amount: {
+                  currency_code: "USD",
+                  value: product.price,
+                },
+                quantity: product.quantity,
+              };
+            }),
+          },
+        ],
+      });
+    },
+    onCancel: onCancelHandler,
+    onApprove: onApproveHandler,
+    onError: onErrorHandler,
+  };
 };
 
 const onCancelHandler = function () {
@@ -56,7 +84,7 @@ const UserOrderDetailsPage = () => {
       userInfo={userInfo}
       getUser={getUser}
       getOrder={getOrder}
-      loadPaypalScript={loadPaypalScript}
+      loadPayPalScript={loadPayPalScript}
     />
   );
 };
