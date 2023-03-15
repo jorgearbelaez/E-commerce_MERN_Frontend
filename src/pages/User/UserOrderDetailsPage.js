@@ -8,6 +8,41 @@ const getOrder = async (orderId) => {
   return data;
 };
 
+const loadPaypalScript = () => {
+  loadScript({
+    "client-id":
+      "AaL_xj8QVq2vA6CfmYAEk51QHPZld1Re_KcF-pNuFVMOSAMdTIl_caVjlRtMVUTTwwS2q8-jobdlU0AM",
+  })
+    .then((paypal) => {
+      paypal
+        .Buttons({
+          createOrder: createPayPalOrderHandler,
+          onCancel: onCancelHandler,
+          onApprove: onApproveHandler,
+          onError: onErrorHandler,
+        })
+        .render("#paypal-container-element");
+    })
+    .catch((err) => {
+      console.error("failed to load the PayPal JS SDK script", err);
+    });
+};
+const createPayPalOrderHandler = function () {
+  console.log("createPayPalOrderHandler");
+};
+
+const onCancelHandler = function () {
+  console.log("cancel");
+};
+
+const onApproveHandler = function () {
+  console.log("onApproveHandler");
+};
+
+const onErrorHandler = function (err) {
+  console.log("error");
+};
+
 const UserOrderDetailsPage = () => {
   const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);
 
@@ -21,7 +56,7 @@ const UserOrderDetailsPage = () => {
       userInfo={userInfo}
       getUser={getUser}
       getOrder={getOrder}
-      loadScript={loadScript}
+      loadPaypalScript={loadPaypalScript}
     />
   );
 };
