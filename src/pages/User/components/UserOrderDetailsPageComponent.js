@@ -43,6 +43,7 @@ const UserOrderDetailsPageComponent = ({
         });
       })
       .catch((err) => console.log(err));
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -68,6 +69,7 @@ const UserOrderDetailsPageComponent = ({
         }
       })
       .catch((err) => console.log(err));
+    // eslint-disable-next-line
   }, []);
 
   const orderHandler = () => {
@@ -77,11 +79,17 @@ const UserOrderDetailsPageComponent = ({
         "To pay for your order click one of the buttons below"
       );
       if (!isPaid) {
-        loadPayPalScript(cartSubtotal, cartItems);
+        loadPayPalScript(cartSubtotal, cartItems, id, updateStateAfterOrder);
       }
     } else {
       setOrderButtonMessage("Your order was placed. Thank you");
     }
+  };
+  const updateStateAfterOrder = (paidAt) => {
+    setOrderButtonMessage("Thank you for your payment!");
+    setIsPaid(paidAt);
+    setButtonDisabled(true);
+    paypalContainer.current.style = "display: none";
   };
 
   return (

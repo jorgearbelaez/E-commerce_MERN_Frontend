@@ -8,14 +8,19 @@ const getOrder = async (orderId) => {
   return data;
 };
 
-const loadPayPalScript = (cartSubtotal, cartItems) => {
+const loadPayPalScript = (
+  cartSubtotal,
+  cartItems,
+  id,
+  updateStateAfterOrder
+) => {
   loadScript({
     "client-id":
       "AaL_xj8QVq2vA6CfmYAEk51QHPZld1Re_KcF-pNuFVMOSAMdTIl_caVjlRtMVUTTwwS2q8-jobdlU0AM",
   })
     .then((paypal) => {
       paypal
-        .Buttons(buttons(cartSubtotal, cartItems))
+        .Buttons(buttons(cartSubtotal, cartItems, id, updateStateAfterOrder))
         .render("#paypal-container-element");
     })
     .catch((err) => {
@@ -23,7 +28,7 @@ const loadPayPalScript = (cartSubtotal, cartItems) => {
     });
 };
 
-const buttons = (cartSubtotal, cartItems) => {
+const buttons = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
   return {
     // using paypal documentation
     createOrder: function (data, actions) {
@@ -61,7 +66,13 @@ const buttons = (cartSubtotal, cartItems) => {
           transaction.status === "COMPLETED" &&
           Number(transaction.amount.value) === Number(cartSubtotal)
         ) {
-          console.log("update order in database");
+          updateOrder(orderId)
+            .then((data) => {
+              if (data.isPaid) {
+                updateStateAfterOrder(data.paidAt);
+              }
+            })
+            .catch((er) => console.log(er));
         }
       });
     },
@@ -74,12 +85,12 @@ const onCancelHandler = function () {
   console.log("cancel");
 };
 
-const onApproveHandler = function () {
-  console.log("onApproveHandler");
-};
-
 const onErrorHandler = function (err) {
   console.log("error");
+};
+const updateOrder = async (orderId) => {
+  const { data } = await axios.put("/api/orders/paid/" + orderId);
+  return data;
 };
 
 const UserOrderDetailsPage = () => {
