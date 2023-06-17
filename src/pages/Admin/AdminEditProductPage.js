@@ -7,21 +7,27 @@ import {
   CloseButton,
   Table,
   Alert,
-  Image,
+  Image
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
+
 const onHover = {
-  cursor: "pointer",
-  position: "absolute",
-  left: "5px",
-  top: "-10px",
-  transform: "scale(2.7)",
-};
+    cursor: "pointer",
+    position: "absolute",
+    left: "5px",
+    top: "-10px",
+    transform: "scale(2.7)",
+}
 
 const AdminEditProductPage = () => {
   const [validated, setValidated] = useState(false);
+
+    const { categories } = useSelector((state) => state.getCategories);
+    console.log(categories);
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -44,12 +50,7 @@ const AdminEditProductPage = () => {
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
-              <Form.Control
-                name="name"
-                required
-                type="text"
-                defaultValue="Panasonic"
-              />
+              <Form.Control name="name" required type="text" defaultValue="Panasonic" />
             </Form.Group>
 
             <Form.Group
@@ -67,24 +68,17 @@ const AdminEditProductPage = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCount">
               <Form.Label>Count in stock</Form.Label>
-              <Form.Control
-                name="count"
-                required
-                type="number"
-                defaultValue="2"
-              />
+              <Form.Control name="count" required type="number" defaultValue="2" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPrice">
               <Form.Label>Price</Form.Label>
-              <Form.Control
-                name="price"
-                required
-                type="text"
-                defaultValue="$210"
-              />
+              <Form.Control name="price" required type="text" defaultValue="$210" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCategory">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>
+                Category
+                
+              </Form.Label>
               <Form.Select
                 required
                 name="category"
@@ -96,6 +90,7 @@ const AdminEditProductPage = () => {
                 <option value="3">Games</option>
               </Form.Select>
             </Form.Group>
+
 
             <Row className="mt-5">
               <Col md={6}>
@@ -183,16 +178,17 @@ const AdminEditProductPage = () => {
 
             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
               <Form.Label>Images</Form.Label>
-              <Row>
-                <Col style={{ position: "relative" }} xs={3}>
-                  <Image src="/images/monitors-category.png" fluid />
-                  <i style={onHover} className="bi bi-x text-danger"></i>
-                </Col>
-                <Col style={{ position: "relative" }} xs={3}>
-                  <Image src="/images/monitors-category.png" fluid />
-                  <i style={onHover} className="bi bi-x text-danger"></i>
-                </Col>
-              </Row>
+                <Row>
+                    <Col style={{position: "relative"}} xs={3}>
+                    <Image crossOrigin="anonymous" src="/images/monitors-category.png" fluid />
+                    <i style={onHover} className="bi bi-x text-danger"></i>
+                    </Col>
+                    <Col style={{position: "relative"}} xs={3}>
+                    <Image src="/images/monitors-category.png" fluid />
+                    <i style={onHover} className="bi bi-x text-danger"></i>
+                    </Col>
+                    
+                </Row>
               <Form.Control required type="file" multiple />
             </Form.Group>
             <Button variant="primary" type="submit">
@@ -206,3 +202,4 @@ const AdminEditProductPage = () => {
 };
 
 export default AdminEditProductPage;
+
