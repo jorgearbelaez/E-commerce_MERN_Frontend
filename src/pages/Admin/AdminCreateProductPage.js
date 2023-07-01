@@ -14,13 +14,13 @@ const uploadImagesApiRequest = async (images, productId) => {
     await axios.post("/api/products/admin/upload?productId=" + productId, formData);
 }
 
-const uploadImagesCloudinaryApiRequest = (images) => {
-    const url = "https://api.cloudinary.com/v1_1/dj4c64zic/image/upload";
+const uploadImagesCloudinaryApiRequest = (images,productId) => {
+    const url = "https://api.cloudinary.com/v1_1/jkhbnc-366gs/image/upload";
     const formData = new FormData();
     for (let i = 0; i < images.length; i++) {
         let file = images[i];
         formData.append("file", file);
-        formData.append("upload_preset", "zahht3qc");
+        formData.append("upload_preset", "acsijtdn");
         fetch(url, {
             method: "POST",
             body: formData,
@@ -29,7 +29,7 @@ const uploadImagesCloudinaryApiRequest = (images) => {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            axios.post("/api/products/admin/upload?cloudinary=true&productId=" + productId, data);
         })
     }
 }
